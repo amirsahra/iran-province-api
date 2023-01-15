@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix'=>'v1'],function (){
-    Route::get('province/{state}', [IranProvinceAPiController::class,'get']);
-    Route::get('provinces', [Province::class,'show']);
+    Route::post('province', [IranProvinceAPiController::class,'get']);
+    Route::post('cities', [Province::class,'show']);
 });

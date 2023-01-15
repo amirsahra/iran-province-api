@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-
 
 class Province extends Model
 {
@@ -13,13 +11,13 @@ class Province extends Model
 
     protected $table = 'provinces';
 
-    protected $fillable = ['data'];
-
+    protected $fillable = ['cities','province'];
 
     public function insertProvince($data)
     {
         return $this->create([
-            'data'=> $data
+            'province' => $data['province'],
+            'cities'=> $data['cities']
         ]);
     }
 }
