@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\IranProvinceAPiController;
+use App\Http\Controllers\V1\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=>'v1'],function (){
     Route::get('province', [IranProvinceAPiController::class,'get']);
+    Route::get('provinces', [Province::class,'show']);
 });

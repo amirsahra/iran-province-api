@@ -14,9 +14,10 @@ class IranProvinceAPiController extends Controller
         $iranLocationsApiEndpoint = "https://iran-locations-api.vercel.app/api/v1/states";
 
         $provincesPayload = Http::get($iranLocationsApiEndpoint);
-        $provincesPayloadBody = $provincesPayload->body();
+        $provincesPayloadBody = ($provincesPayload->collect());
 
-        $result = $province->insertProvince(['data' => $provincesPayloadBody]);
+        $result = $province->insertProvince($provincesPayloadBody);
+
         return response()->apiResult(
             'successfully',
             ['provinces' => $result]
