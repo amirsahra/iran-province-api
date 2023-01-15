@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Http\Contracts\Strategy\JsonResult;
+use App\Http\Contracts\Strategy\TextResult;
+use App\Http\Contracts\Strategy\XmlResult;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\CitiesRequest;
-use Illuminate\Http\Request;
 
 class Province extends Controller
 {
@@ -13,17 +15,18 @@ class Province extends Controller
         $type = $request->input('type') ?? 'json';
         $province = $request->input('province');
 
-        $data = \App\Models\Province::where('province',$province)->first();
+        $data = \App\Models\Province::where('province', $province)->first();
 
-        if ($type == 'text'){
-            return response($data['cities']);
+        $resultStrategy = new JsonResult();
+        if ($type == 'text') {
+            $resultStrategy = new TextResult();
         }
 
-        if ($type == 'xml'){
-            return response()->xml(json_decode($data['cities'],true));
+        if ($type == 'xml') {
+            $resultStrategy = new XmlResult();
         }
 
-        return response(json_decode($data['cities'],true));
+        return $resultStrategy->show($data);
 
     }
 }
