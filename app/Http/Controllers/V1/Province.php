@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 
 class Province extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
+        $type = $request->type ?? 'json';
+
         $data = \App\Models\Province::latest()->first();
-        //return response(json_decode($data['data']));
-        //return response(($data['data']));
-        return response()->x;
+        if ($type == 'text'){
+            return response($data['data']);
+        }
+
+        if ($type == 'xml'){
+            return response()->xml(json_decode($data['data'],true));
+        }
+
+        return response(json_decode($data['data'],true));
+
     }
 }
