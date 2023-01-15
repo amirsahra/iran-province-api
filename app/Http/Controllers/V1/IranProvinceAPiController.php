@@ -16,7 +16,6 @@ class IranProvinceAPiController extends Controller
         $provincesPayload  = Http::get($iranLocationsApiEndpoint);
         $provincesPayloadBody = $provincesPayload->body();
 
-
         //return ($provincesPayload->body());
     }
 }
