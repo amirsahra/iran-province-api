@@ -155,16 +155,16 @@ curl --location --request POST 'http://127.0.0.1:8000/api/v1/cities'
 --form 'type="xml"'
 ```
 
-##How to use ?
+## How to use ?
 Follow these steps to get this project live
-###Get file
+### Get file
 ```bash
 https://github.com/amirsahra/iran-province-api.git
 cd iran-province-api
 composer install
 php artisan key:generate
 ```
-###Configure your .env file
+### Configure your .env file
 Enter the database and table information that you have already created.
 
 For example :
@@ -176,7 +176,7 @@ DB_DATABASE=db_name
 DB_USERNAME=db_username
 DB_PASSWORD=db_password
 ```
-###Create table
+### Create table
 ```bash
 php artisan migrate
 ```
