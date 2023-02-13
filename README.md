@@ -1,64 +1,189 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Iran province api
+Receive an external api and store it in the database and display it in three formats: `json`, `xml`, `text`
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is for sample work, it can also be used as a code sample to receive and manage api and display it.
 
-## About Laravel
+In this code, we get the api of Iranian cities from the https://iran-locations-api.vercel.app site.
+By sending the name of the province, its cities will be received and stored in the database.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## example
+Endpoint for call api and store it.
+```php
+http://127.0.0.1:8000/api/v1/province
+```
+request
+```php
+curl --location --request POST 'http://127.0.0.1:8000/api/v1/province' 
+--header 'Accept: application/json' 
+--form 'province="مازندران"'
+```
+response
+```json
+{
+    "success": true,
+    "status": 200,
+    "message": "successfully",
+    "data": {
+        "provinces": {
+            "province": "مازندران",
+            "cities": {
+                "name": "مازندران",
+                "center": "ساري",
+                "latitude": "36.330",
+                "longitude": "53.30",
+                "cities": [
+                    {
+                        "name": "ساري",
+                        "latitude": "36.330",
+                        "longitude": "53.30",
+                        "id": 1
+                    },
+                    {
+                        "name": "آمل",
+                        "latitude": "36.280",
+                        "longitude": "52.220",
+                        "id": 2
+                    },
+                    {
+                        "name": "بابل",
+                        "latitude": "36.330",
+                        "longitude": "52.410",
+                        "id": 3
+                    },
+                    {
+                        "name": "بابلسر",
+                        "latitude": "36.420",
+                        "longitude": "52.390",
+                        "id": 4
+                    },
+                    {
+                        "name": "بهشهر",
+                        "latitude": "36.420",
+                        "longitude": "53.330",
+                        "id": 5
+                    },
+                    {
+                        "name": "تنكابن",
+                        "latitude": "36.490",
+                        "longitude": "50.530",
+                        "id": 6
+                    },
+                    {
+                        "name": "جويبار",
+                        "latitude": "36.380",
+                        "longitude": "52.550",
+                        "id": 7
+                    },
+                    {
+                        "name": "چالوس",
+                        "latitude": "36.390",
+                        "longitude": "51.250",
+                        "id": 8
+                    },
+                    {
+                        "name": "رامسر",
+                        "latitude": "37.5426",
+                        "longitude": "50.3944",
+                        "id": 9
+                    },
+                    {
+                        "name": "قائم شهر",
+                        "latitude": "52.859",
+                        "longitude": "36.466",
+                        "id": 10
+                    },
+                    {
+                        "name": "نكا",
+                        "latitude": "36.390",
+                        "longitude": "53.180",
+                        "id": 11
+                    },
+                    {
+                        "name": "نور",
+                        "latitude": "36.3410",
+                        "longitude": "52.049",
+                        "id": 12
+                    },
+                    {
+                        "name": "بلده",
+                        "latitude": "36.120",
+                        "longitude": "51.490",
+                        "id": 13
+                    },
+                    {
+                        "name": "نوشهر",
+                        "latitude": "36.390",
+                        "longitude": "51.300",
+                        "id": 14
+                    },
+                    {
+                        "name": "محمود آباد",
+                        "latitude": "52.278",
+                        "longitude": "36.634",
+                        "id": 15
+                    }
+                ],
+                "id": 27
+            },
+            "updated_at": "2023-02-13T15:33:19.000000Z",
+            "created_at": "2023-02-13T15:33:19.000000Z",
+            "id": 2
+        }
+    }
+}
+```
+Now the sent provincial cities are stored in the database.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+If the name of the province is repeated or the name of the province does not exist, it gives an error.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Endpoint for get province information :
 
-## Learning Laravel
+```php
+http://127.0.0.1:8000/api/v1/cities
+```
+request 
+```php
+curl --location --request POST 'http://127.0.0.1:8000/api/v1/cities' 
+--form 'province="تهران"'
+```
+The default format is `json`. 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+To display `xml` and `text`, it is sufficient to send the `type` parameter in the desired format in the header
+```php
+curl --location --request POST 'http://127.0.0.1:8000/api/v1/cities' 
+--form 'province="تهران"' 
+--form 'type="xml"'
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+##How to use ?
+Follow these steps to get this project live
+###Get file
+```bash
+https://github.com/amirsahra/iran-province-api.git
+cd iran-province-api
+composer install
+php artisan key:generate
+```
+###Configure your .env file
+Enter the database and table information that you have already created.
 
-## Laravel Sponsors
+For example :
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_name
+DB_USERNAME=db_username
+DB_PASSWORD=db_password
+```
+###Create table
+```bash
+php artisan migrate
+```
+### Final steps
+```bash
+php artisan serv
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## license
+[MIT](https://choosealicense.com/licenses/mit/) amirsahra
